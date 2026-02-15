@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RINGO — Water Supply & Logistics | by HomExecutives</title>
+  <meta name="description" content="RINGO by HomExecutives — Water Supply, Logistics, Errands, Laundry. Swift. Reliable. Always on Time." />
+
+  <style>
+    :root{
+      --blue:#002855;          /* RINGO Deep Blue */
+      --yellow:#FFD700;        /* HomExecutives Yellow */
+      --red:#C8102E;           /* HomExecutives Red */
+      --ash:#E9E9E9;
+      --ink:#0b1220;
+      --white:#ffffff;
+      --radius:18px;
+      --shadow: 0 10px 30px rgba(0,0,0,.12);
+      --shadow2: 0 6px 18px rgba(0,0,0,.10);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink);
+      background: linear-gradient(180deg, #f7f7f7 0%, #ffffff 35%, #f4f6f8 100%);
+    }
+    a{color:inherit}
+    .container{max-width:1100px;margin:0 auto;padding:18px}
+    .topbar{
+      position:sticky; top:0; z-index:10;
+      background: rgba(255,255,255,.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0,0,0,.06);
+    }
+    .topbar-inner{display:flex;gap:14px;align-items:center;justify-content:space-between}
+    .brand{
+      display:flex;align-items:center;gap:12px;
+      padding:10px 0;
+    }
+    .mark{
+      width:42px;height:42px;border-radius:12px;
+      background: radial-gradient(circle at 30% 30%, var(--yellow), #f5c500 60%, #e6b100 100%);
+      display:grid;place-items:center;
+      box-shadow: var(--shadow2);
+      border: 1px solid rgba(0,0,0,.08);
+      flex:0 0 auto;
+    }
+    .mark svg{width:26px;height:26px}
+    .brand h1{font-size:16px;margin:0;line-height:1.1}
+    .brand small{display:block;color:rgba(0,0,0,.65);font-weight:600;margin-top:3px}
+    .pillbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
+    .pill{
+      display:inline-flex;align-items:center;gap:8px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.10);
+      padding:9px 12px;
+      background:#fff;
+      box-shadow: 0 4px 12px rgba(0,0,0,.06);
+      font-weight:700;
+      text-decoration:none;
+      cursor:pointer;
+      user-select:none;
+    }
+    .pill.primary{
+      background: var(--blue);
+      color:#fff;
+      border-color: rgba(255,255,255,.15);
+    }
+    .pill.primary:hover{filter:brightness(1.06)}
+    .pill:hover{transform: translateY(-1px)}
+    .hero{
+      margin-top:18px;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, var(--blue) 0%, #001b3e 65%, #001431 100%);
+      color:#fff;
+      overflow:hidden;
+      box-shadow: var(--shadow);
+      position:relative;
+    }
+    .hero::after{
+      content:"";
+      position:absolute; inset:-60px -120px auto auto;
+      width:320px;height:320px;border-radius:50%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,215,0,.45), rgba(255,215,0,0) 65%);
+      transform: rotate(18deg);
+    }
+    .hero-inner{
+      padding:28px;
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    @media (max-width: 900px){
+      .hero-inner{grid-template-columns: 1fr; padding:20px}
+    }
+    .hero h2{margin:0;font-size:30px;letter-spacing:.2px}
+    .tagline{
+      margin:10px 0 0;
+      color:rgba(255,255,255,.9);
+      font-weight:700;
+    }
+    .hero p{margin:14px 0 0;color:rgba(255,255,255,.85);line-height:1.55}
+    .hero-card{
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: var(--radius);
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .hero-card .row{display:flex;gap:10px;flex-wrap:wrap}
+    .kv{
+      flex:1 1 160px;
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 14px;
+      padding:12px;
+    }
+    .kv b{display:block}
+    .kv span{display:block;color:rgba(255,255,255,.85);margin-top:4px}
+    .section{margin-top:22px}
+    .section h3{margin:0 0 10px;font-size:18px}
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:14px;
+    }
+    .card{
+      grid-column: span 6;
+      background:#fff;
+      border:1px solid rgba(0,0,0,.08);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 24px rgba(0,0,0,.06);
+      overflow:hidden;
+    }
+    @media (max-width: 900px){ .card{grid-column: span 12;} }
+    .card-head{
+      padding:16px;
+      display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+      border-bottom:1px solid rgba(0,0,0,.06);
+    }
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:7px 10px;border-radius:999px;
+      background: rgba(0,40,85,.08);
+      color: var(--blue);
+      border: 1px solid rgba(0,40,85,.12);
+      font-weight:800;
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .badge.red{
+      background: rgba(200,16,46,.08);
+      border-color: rgba(200,16,46,.14);
+      color: var(--red);
+    }
+    .card h4{margin:0;font-size:16px}
+    .card p{margin:8px 0 0;color:rgba(0,0,0,.70);line-height:1.5}
+    .card-body{padding:16px}
+    .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .btn{
+      appearance:none;border:none;cursor:pointer;
+      border-radius: 12px;
+      padding:10px 12px;
+      font-weight:900;
+      text-decoration:none;
+      display:inline-flex;align-items:center;gap:8px;
+      box-shadow: 0 6px 18px rgba(0,0,0,.08);
+    }
+    .btn.blue{background: var(--blue);color:#fff}
+    .btn.yellow{background: var(--yellow);color: #1b1b1b}
+    .btn.ghost{
+      background:#fff;color:var(--blue);
+      border:1px solid rgba(0,40,85,.18);
+      box-shadow:none;
+      font-weight:900;
+    }
+    .btn:hover{transform: translateY(-1px)}
+    .note{
+      margin-top:14px;
+      padding:14px;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, #fff 0%, #fbfbfb 100%);
+      border:1px solid rgba(0,0,0,.08);
+      box-shadow: 0 8px 24px rgba(0,0,0,.04);
+      color: rgba(0,0,0,.72);
+      line-height:1.55;
+    }
+    .footer{
+      margin:26px 0 10px;
+      border-top: 1px solid rgba(0,0,0,.08);
+      padding-top:16px;
+      display:flex;gap:14px;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;
+      color: rgba(0,0,0,.70);
+    }
+
+    /* Modal */
+    .modal-backdrop{
+      position:fixed;inset:0;
+      background: rgba(0,0,0,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:999;
+    }
+    .modal{
+      width:min(860px, 100%);
+      background:#fff;
+      border-radius: 20px;
+      overflow:hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,.25);
+      border:1px solid rgba(255,255,255,.16);
+    }
+    .modal-top{
+      padding:14px 16px;
+      background: linear-gradient(135deg, var(--blue), #001b3e);
+      color:#fff;
+      display:flex;align-items:center;justify-content:space-between;gap:10px;
+    }
+    .modal-top b{font-size:15px}
+    .x{
+      background: rgba(255,255,255,.16);
+      border:1px solid rgba(255,255,255,.18);
+      color:#fff;
+      border-radius: 10px;
+      padding:8px 10px;
+      cursor:pointer;
+      font-weight:900;
+    }
+    .modal-content{padding:16px}
+    .two{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    @media (max-width: 900px){ .two{grid-template-columns: 1fr;} }
+    .panel{
+      border:1px solid rgba(0,0,0,.10);
+      border-radius: 16px;
+      padding:14px;
+      background: #fff;
+    }
+    .panel h5{margin:0 0 8px;font-size:14px}
+    .list{margin:0;padding-left:18px;color:rgba(0,0,0,.75);line-height:1.55}
+    .field{
+      display:flex;flex-direction:column;gap:6px;margin-top:10px;
+    }
+    .field label{font-weight:800;font-size:12px;color:rgba(0,0,0,.72)}
+    .field input,.field select,.field textarea{
+      border-radius: 12px;
+      border:1px solid rgba(0,0,0,.12);
+      padding:10px 12px;
+      font: inherit;
+      outline:none;
+      background:#fff;
+    }
+    .field textarea{min-height:92px;resize:vertical}
+    .hint{font-size:12px;color:rgba(0,0,0,.65);margin-top:6px}
+    .paybox{
+      margin-top:12px;
+      border-radius: 14px;
+      border:1px dashed rgba(200,16,46,.35);
+      background: rgba(200,16,46,.05);
+      padding:12px;
+    }
+    .paybox b{color: var(--red)}
+    .tiny{font-size:12px;color:rgba(0,0,0,.70);margin-top:6px}
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">
+          <!-- simple R icon -->
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M7 20V4h8.2c2.7 0 4.3 1.5 4.3 3.8 0 2-1.1 3.2-2.8 3.7l3 8.5h-3.2l-2.7-8H10v8H7zm3-10h5c1.1 0 1.8-.5 1.8-1.6S16.1 7 15 7h-5v3z" fill="#002855"/>
+          </svg>
+        </div>
+        <div>
+          <h1>RINGO <span style="color:var(--red)">•</span> Water Supply & Logistics</h1>
+          <small>Swift. Reliable. Always on Time. <span style="opacity:.75">| by HomExecutives</span></small>
+        </div>
+      </div>
+
+      <div class="pillbar">
+        <a class="pill" href="#services">Services</a>
+        <a class="pill" href="#how">How to Book</a>
+        <a class="pill primary" id="openQuickOrder" href="javascript:void(0)">Place Order</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <section class="hero" id="home">
+      <div class="hero-inner">
+        <div>
+          <h2>Community-ready delivery for your daily needs.</h2>
+          <div class="tagline">Water • Logistics • Errands • Laundry</div>
+          <p>
+            RINGO is the logistics arm built under <b>HomExecutives</b>. We started with real water supply work
+            (truck delivery) and we are expanding into reliable, timely household logistics.
+          </p>
+          <div class="actions" style="margin-top:16px">
+            <button class="btn yellow" id="goServices">Explore Services</button>
+            <a class="btn blue" target="_blank"
+               href="https://wa.me/2348136805462?text=Hello%20RINGO%20%E2%80%94%20I%20want%20to%20place%20an%20order.%0AService%3A%20%0ALocation%3A%20%0APreferred%20Time%3A%20%0ADetails%3A">
+              WhatsApp Instant Order
+            </a>
+          </div>
+
+          <div class="note">
+            <b>Service Area (current focus):</b> Zaria — A.B.U. staff quarters (Area C, Area G, Area E, Area F), Samaru.
+            <br><b>Payment:</b> Moniepoint <b>5049588925</b> — <b>Charles Inyam Arin</b>.
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="row">
+            <div class="kv">
+              <b>Mission</b>
+              <span>Deliver fast, reliable water and logistics support to homes and communities.</span>
+            </div>
+            <div class="kv">
+              <b>Vision</b>
+              <span>Become the most trusted local logistics + water supply network in Zaria and beyond.</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="kv">
+              <b>Core Values</b>
+              <span>Reliability • Speed • Integrity • Community • Growth</span>
+            </div>
+            <div class="kv">
+              <b>Parent Brand</b>
+              <span>HomExecutives — “Your Home Solutions. Executive Standard.”</span>
+            </div>
+          </div>
+          <div class="row">
+            <a class="btn ghost" href="#how">How booking works</a>
+            <button class="btn yellow" id="openWater">Book Water</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <h3>Services (Tap “More details” to see full steps + booking)</h3>
+
+      <div class="grid">
+        <!-- Water -->
+        <article class="card">
+          <div class="card-head">
+            <div>
+              <div class="badge">💧 Water Supply</div>
+              <h4>Water delivery for homes & compounds</h4>
+              <p>Fast supply scheduling, urgent delivery support, simple booking.</p>
+            </div>
+            <span class="badge red">Most Popular</span>
+          </div>
+          <div class="card-body">
+            <div class="actions">
+              <button class="btn yellow" data-open="water">More details</button>
+              <a class="btn blue" target="_blank"
+                 href="https://wa.me/2348136805462?text=Hello%20RINGO%20%E2%80%94%20I%20want%20WATER%20SUPPLY.%0ALocation%3A%20%0AQuantity%20(or%20container%20type)%3A%20%0APreferred%20Time%3A%20%0A">
+                Book on WhatsApp
+              </a>
+              <a class="btn ghost" target="_blank" href="https://forms.gle/gqb2ZDpzUyjJn17V6">Book with Form</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Logistics -->
+        <article class="card">
+          <div class="card-head">
+            <div>
+              <div class="badge">📦 Logistics</div>
+              <h4>Pickup & drop-off delivery</h4>
+              <p>Small packages, documents, items within service zones.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="actions">
+              <button class="btn yellow" data-open="logistics">More details</button>
+              <a class="btn blue" target="_blank"
+                 href="https://wa.me/2348136805462?text=Hello%20RINGO%20%E2%80%94%20I%20want%20LOGISTICS%20DELIVERY.%0APickup%20Point%3A%20%0ADrop-off%20Point%3A%20%0AItem%20Description%3A%20%0APreferred%20Time%3A%20%0A">
+                Book on WhatsApp
+              </a>
+              <a class="btn ghost" target="_blank" href="https://forms.gle/gqb2ZDpzUyjJn17V6">Book with Form</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Errands -->
+        <article class="card">
+          <div class="card-head">
+            <div>
+              <div class="badge">🧾 Errand Services</div>
+              <h4>Run tasks while you focus</h4>
+              <p>Pickups, drop-offs, store runs, simple coordination.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="actions">
+              <button class="btn yellow" data-open="errands">More details</button>
+              <a class="btn blue" target="_blank"
+                 href="https://wa.me/2348136805462?text=Hello%20RINGO%20%E2%80%94%20I%20need%20an%20ERRAND.%0AErrand%20Details%3A%20%0ALocation%3A%20%0APreferred%20Time%3A%20%0A">
+                Book on WhatsApp
+              </a>
+              <a class="btn ghost" target="_blank" href="https://forms.gle/gqb2ZDpzUyjJn17V6">Book with Form</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Laundry -->
+        <article class="card">
+          <div class="card-head">
+            <div>
+              <div class="badge">🧺 Laundry Services</div>
+              <h4>Pickup, wash, and return</h4>
+              <p>Simple laundry coordination: pickup → wash → return.</p>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="actions">
+              <button class="btn yellow" data-open="laundry">More details</button>
+              <a class="btn blue" target="_blank"
+                 href="https://wa.me/2348136805462?text=Hello%20RINGO%20%E2%80%94%20I%20need%20LAUNDRY%20SERVICE.%0APickup%20Location%3A%20%0AItems%20Count%20(approx)%3A%20%0APreferred%20Pickup%20Time%3A%20%0A">
+                Book on WhatsApp
+              </a>
+              <a class="btn ghost" target="_blank" href="https://forms.gle/gqb2ZDpzUyjJn17V6">Book with Form</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="note" id="how">
+        <b>How booking works (simple):</b><br>
+        1) Choose a service → 2) Tap “Book on WhatsApp” or “Book with Form” → 3) We confirm availability & price →
+        4) Payment (if required) → 5) Delivery / service completion.
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <h3>Contact</h3>
+      <div class="note">
+        <b>Phone:</b> +234 813 680 5462<br>
+        <b>Email:</b> arinonebusiness@gmail.com<br>
+        <b>Service Area:</b> Zaria — A.B.U. staff quarters (Area C, G, E, F), Samaru<br>
+        <b>Payment:</b> Moniepoint 5049588925 — Charles Inyam Arin
+      </div>
+
+      <div class="footer">
+        <div>
+          <b>RINGO by HomExecutives</b><br>
+          <span>Integrated home solutions, executive standard.</span>
+        </div>
+        <div>
+          <span><b>HomExecutives values:</b> H.O.M.E.S. — Holistic • Organization • Maintenance • Excellence • Service</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL -->
+  <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal">
+      <div class="modal-top">
+        <b id="modalTitle">Service Details</b>
+        <button class="x" id="closeModal">Close</button>
+      </div>
+      <div class="modal-content">
+        <div class="two">
+          <div class="panel">
+            <h5 id="modalSub">What you get</h5>
+            <ul class="list" id="modalList"></ul>
+
+            <div class="paybox">
+              <b>Payment Details</b>
+              <div class="tiny">Moniepoint: <b>5049588925</b> — <b>Charles Inyam Arin</b></div>
+              <div class="tiny">We confirm availability and total cost before payment.</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h5>Quick booking (generates WhatsApp message)</h5>
+
+            <div class="field">
+              <label>Full Name</label>
+              <input id="fName" placeholder="Your name" />
+            </div>
+            <div class="field">
+              <label>Location</label>
+              <input id="fLocation" placeholder="Area C / Area G / Area E / Area F (or exact address)" />
+            </div>
+            <div class="field" id="fieldQty">
+              <label id="qtyLabel">Quantity / Details</label>
+              <input id="fQty" placeholder="e.g., number of containers / item description / clothes count" />
+            </div>
+            <div class="field">
+              <label>Preferred Time</label>
+              <select id="fTime">
+                <option value="Morning (7 AM – 12 PM)">Morning (7 AM – 12 PM)</option>
+                <option value="Afternoon (12 PM – 5 PM)">Afternoon (12 PM – 5 PM)</option>
+                <option value="Evening (5 PM – 9 PM)">Evening (5 PM – 9 PM)</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Extra Notes</label>
+              <textarea id="fNotes" placeholder="Any instructions…"></textarea>
+            </div>
+
+            <div class="actions" style="margin-top:12px">
+              <button class="btn yellow" id="sendWhatsApp">Send on WhatsApp</button>
+              <a class="btn ghost" target="_blank" href="https://forms.gle/gqb2ZDpzUyjJn17V6">Open Booking Form</a>
+            </div>
+
+            <div class="hint">
+              Tip: WhatsApp booking is fastest. The form is perfect when you want written records.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== CONFIG =====
+    const WHATSAPP_NUMBER = "2348136805462";
+    const FORM_LINK = "https://forms.gle/gqb2ZDpzUyjJn17V6";
+
+    const SERVICE_DATA = {
+      water: {
+        title: "Water Supply",
+        sub: "How water supply works",
+        qtyLabel: "Quantity / Container type",
+        list: [
+          "Quick scheduling for household water delivery",
+          "Urgent delivery support where possible",
+          "Clear confirmation before dispatch",
+          "Service focus: A.B.U. staff quarters & nearby zones"
+        ],
+        template: (v) => (
+`Hello RINGO 👋
+I want WATER SUPPLY.
+
+Name: ${v.name}
+Location: ${v.location}
+Quantity/Container: ${v.qty}
+Preferred Time: ${v.time}
+Notes: ${v.notes}
+
+Please confirm availability and total cost.`
+        )
+      },
+      logistics: {
+        title: "Logistics Delivery",
+        sub: "Pickup & drop-off delivery",
+        qtyLabel: "Item description",
+        list: [
+          "Pickup point → drop-off point delivery",
+          "Documents, packages, small items",
+          "Clear coordination and timing",
+          "Confirmation before movement"
+        ],
+        template: (v) => (
+`Hello RINGO 👋
+I want LOGISTICS DELIVERY.
+
+Name: ${v.name}
+Pickup/Location: ${v.location}
+Item Description: ${v.qty}
+Preferred Time: ${v.time}
+Notes: ${v.notes}
+
+Please confirm availability and total cost.`
+        )
+      },
+      errands: {
+        title: "Errand Services",
+        sub: "Run tasks while you focus",
+        qtyLabel: "Errand details",
+        list: [
+          "Pickups and drop-offs",
+          "Store / market runs (as agreed)",
+          "Time-focused, transparent execution",
+          "We confirm steps before action"
+        ],
+        template: (v) => (
+`Hello RINGO 👋
+I need an ERRAND.
+
+Name: ${v.name}
+Location: ${v.location}
+Errand Details: ${v.qty}
+Preferred Time: ${v.time}
+Notes: ${v.notes}
+
+Please confirm feasibility and total cost.`
+        )
+      },
+      laundry: {
+        title: "Laundry Services",
+        sub: "Pickup → wash → return",
+        qtyLabel: "Items count (approx.)",
+        list: [
+          "Pickup from your location (where available)",
+          "Wash/handle with care",
+          "Return/delivery scheduling",
+          "Clear confirmation before pickup"
+        ],
+        template: (v) => (
+`Hello RINGO 👋
+I need LAUNDRY SERVICE.
+
+Name: ${v.name}
+Pickup Location: ${v.location}
+Items Count: ${v.qty}
+Preferred Pickup Time: ${v.time}
+Notes: ${v.notes}
+
+Please confirm availability and total cost.`
+        )
+      }
+    };
+
+    // ===== UI =====
+    const modalBackdrop = document.getElementById("modalBackdrop");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalSub = document.getElementById("modalSub");
+    const modalList = document.getElementById("modalList");
+    const closeModal = document.getElementById("closeModal");
+
+    const fName = document.getElementById("fName");
+    const fLocation = document.getElementById("fLocation");
+    const fQty = document.getElementById("fQty");
+    const fTime = document.getElementById("fTime");
+    const fNotes = document.getElementById("fNotes");
+    const qtyLabelEl = document.getElementById("qtyLabel");
+
+    const sendWhatsApp = document.getElementById("sendWhatsApp");
+    const openQuickOrder = document.getElementById("openQuickOrder");
+    const goServices = document.getElementById("goServices");
+    const openWater = document.getElementById("openWater");
+
+    let activeServiceKey = "water";
+
+    function openModal(serviceKey){
+      activeServiceKey = serviceKey;
+      const s = SERVICE_DATA[serviceKey];
+
+      modalTitle.textContent = s.title + " — Details & Booking";
+      modalSub.textContent = s.sub;
+      qtyLabelEl.textContent = s.qtyLabel;
+
+      modalList.innerHTML = "";
+      s.list.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = item;
+        modalList.appendChild(li);
+      });
+
+      // reset inputs lightly
+      fQty.placeholder = (serviceKey === "water")
+        ? "e.g., 2 jerrycans / 1 tank / your container type"
+        : (serviceKey === "laundry" ? "e.g., 15 clothes (approx.)" : "Describe what you need");
+
+      modalBackdrop.style.display = "flex";
+      modalBackdrop.setAttribute("aria-hidden","false");
+    }
+
+    function close(){
+      modalBackdrop.style.display = "none";
+      modalBackdrop.setAttribute("aria-hidden","true");
+    }
+
+    function waLink(message){
+      const encoded = encodeURIComponent(message);
+      return `https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`;
+    }
+
+    document.querySelectorAll("[data-open]").forEach(btn=>{
+      btn.addEventListener("click", ()=> openModal(btn.getAttribute("data-open")));
+    });
+
+    openQuickOrder.addEventListener("click", ()=> openModal("water"));
+    openWater.addEventListener("click", ()=> openModal("water"));
+
+    goServices.addEventListener("click", ()=>{
+      document.getElementById("services").scrollIntoView({behavior:"smooth"});
+    });
+
+    closeModal.addEventListener("click", close);
+    modalBackdrop.addEventListener("click", (e)=>{ if(e.target === modalBackdrop) close(); });
+    document.addEventListener("keydown", (e)=>{ if(e.key === "Escape") close(); });
+
+    sendWhatsApp.addEventListener("click", ()=>{
+      const s = SERVICE_DATA[activeServiceKey];
+      const values = {
+        name: (fName.value || "—").trim(),
+        location: (fLocation.value || "—").trim(),
+        qty: (fQty.value || "—").trim(),
+        time: fTime.value,
+        notes: (fNotes.value || "—").trim()
+      };
+      const msg = s.template(values);
+      window.open(waLink(msg), "_blank");
+    });
+  </script>
+</body>
+</html>
